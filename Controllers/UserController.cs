@@ -69,10 +69,38 @@ namespace pruebaidwm.Controllers
 
         // GET /api/user
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery] string sort = null, [FromQuery] string gender = null)
         {
+
+            var validGenders = new[] { "masculino", "femenino", "otro", "prefiero no decirlo" };
+
+            if (gender != null && !validGenders.Contains(gender.ToLower()))
+            {
+                return BadRequest("Algún filtro es inválido.");
+            }
+
+            if (sort != null && sort.ToLower() != "asc" && sort.ToLower() != "desc")
+            {
+                return BadRequest("Algún filtro es inválido.");
+            }
+
             var users = await _userRepository.GetUsersAsync();
-            return Ok(users);
+
+            if (!string.IsNullOrEmpty(gender))
+            {
+                users = users.Where(u => u.Gender.ToLower() == gender.ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                users = sort.ToLower() == "asc" ? users.OrderBy(u => u.Name) : users.OrderByDescending(u => u.Name);
+            }
+
+            return Ok(new 
+            {
+                Message = "Usuarios obtenidos exitosamente.",
+                Users = users.ToList()
+            });
         }
 
         // GET /api/user/{id}
