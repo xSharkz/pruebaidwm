@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "7bd5beb8-4192-4903-8936-58fc633e6950",
+		"name": "PruebaIDWM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33696582"
+	},
+	"item": [
+		{
+			"name": "Crear un usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rut\": \"12345678-9\",\r\n    \"name\": \"Juan Pérez\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"gender\": \"masculino\",\r\n    \"birthDate\": \"1990-01-01T00:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{user}}/api/user",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{user}}/api/User?sort&gender",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						"api",
+						"User"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": null
+						},
+						{
+							"key": "gender",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar un usuario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rut\": \"12345678-9\",\r\n    \"name\": \"Juan Pérez Actualizado\",\r\n    \"email\": \"juan.perez_actualizado@example.com\",\r\n    \"gender\": \"masculino\",\r\n    \"birthDate\": \"1990-01-01T00:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{user}}/api/user/{{id}}",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{user}}/api/user/{{id}}",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
