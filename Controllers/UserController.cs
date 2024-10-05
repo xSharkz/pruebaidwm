@@ -106,9 +106,16 @@ namespace pruebaidwm.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
+            var user = await _userRepository.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
             await _userRepository.DeleteUserAsync(id);
             await _userRepository.SaveChangesAsync();
-            return NoContent();
+
+            return Ok("Usuario eliminado exitosamente.");
         }
 
         private bool IsValidEmail(string email)
