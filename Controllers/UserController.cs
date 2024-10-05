@@ -122,12 +122,52 @@ namespace pruebaidwm.Controllers
             var existingUser = await _userRepository.GetUserByIdAsync(id);
             if (existingUser == null)
             {
-                return NotFound();
+                return NotFound("Usuario no encontrado.");
             }
 
-            await _userRepository.UpdateUserAsync(user);
+            bool hasFormatError = false;
+
+            if (await _userRepository.UserExistsByRut(user.Rut) && user.Rut != existingUser.Rut)
+            {
+                return BadRequest("Alguna validación no fue cumplida.");
+            }
+
+            if (string.IsNullOrWhiteSpace(user.Name) || user.Name.Length < 3 || user.Name.Length > 100)
+            {
+                hasFormatError = true;
+            }
+
+            if (!IsValidEmail(user.Email))
+            {
+                hasFormatError = true;
+            }
+
+            var validGenders = new[] { "masculino", "femenino", "otro", "prefiero no decirlo" };
+            if (!validGenders.Contains(user.Gender.ToLower()))
+            {
+                hasFormatError = true;
+            }
+
+            if (user.BirthDate >= DateTime.Now)
+            {
+                hasFormatError = true;
+            }
+
+            if (hasFormatError)
+            {
+                return BadRequest("Alguna validación no fue cumplida."); 
+            }
+
+            existingUser.Rut = user.Rut;
+            existingUser.Name = user.Name;
+            existingUser.Email = user.Email;
+            existingUser.Gender = user.Gender;
+            existingUser.BirthDate = user.BirthDate;
+
+            await _userRepository.UpdateUserAsync(existingUser);
             await _userRepository.SaveChangesAsync();
-            return Ok(user);
+
+            return Ok("Usuario actualizado exitosamente.");
         }
 
         // DELETE /api/user/{id}
