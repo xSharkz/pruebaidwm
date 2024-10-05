@@ -6,7 +6,7 @@ using pruebaidwm.Models;
 
 namespace pruebaidwm.Interfaces
 {
-    public class IUserRepository
+    public interface IUserRepository
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserByIdAsync(int id);
