@@ -43,6 +43,7 @@ namespace pruebaidwm.Repository
             if (user != null)
             {
                 _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
             }
         }
 
