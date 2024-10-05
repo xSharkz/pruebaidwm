@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "7FLvFx3VsS2goe3OoZtlDXxDcf8V/0G1ewRm6zGi+9N+mLqGgEllPf37k8g8JNwn5mtcfvKWxPmEYoJG92C+2w==",
+  "dgSpecHash": "sJykh/cvSOmEb6RAQYVOMTC6RacCgj28GL2D6T2AdwNe0m0sTDI1CcAiXNc7RXB1Y7rq7PRDOBvuSSIjrsXJAQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\djbeb\\pruebaidwm\\pruebaidwm.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\djbeb\\.nuget\\packages\\bogus\\35.6.1\\bogus.35.6.1.nupkg.sha512",
     "C:\\Users\\djbeb\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\djbeb\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.4\\microsoft.aspnetcore.openapi.8.0.4.nupkg.sha512",
     "C:\\Users\\djbeb\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
