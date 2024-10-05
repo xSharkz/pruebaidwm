@@ -26,12 +26,45 @@ namespace pruebaidwm.Controllers
         {
             if (await _userRepository.UserExistsByRut(user.Rut))
             {
-                return Conflict("RUT already exists.");
+                return Conflict("El RUT ya existe.");
+            }
+
+            bool hasFormatError = false;
+
+            if (string.IsNullOrWhiteSpace(user.Name) || user.Name.Length < 3 || user.Name.Length > 100)
+            {
+                hasFormatError = true;
+            }
+
+            if (!IsValidEmail(user.Email))
+            {
+                hasFormatError = true;
+            }
+
+            var validGenders = new[] { "masculino", "femenino", "otro", "prefiero no decirlo" };
+            if (!validGenders.Contains(user.Gender.ToLower()))
+            {
+                hasFormatError = true;
+            }
+
+            if (user.BirthDate >= DateTime.Now)
+            {
+                hasFormatError = true;
+            }
+
+            if (hasFormatError)
+            {
+                return BadRequest("Alguna validación no fue cumplida.");
             }
 
             await _userRepository.AddUserAsync(user);
             await _userRepository.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, new 
+            {
+                Message = "Usuario creado exitosamente.",
+                User = user
+            });
         }
 
         // GET /api/user
@@ -76,6 +109,19 @@ namespace pruebaidwm.Controllers
             await _userRepository.DeleteUserAsync(id);
             await _userRepository.SaveChangesAsync();
             return NoContent();
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mail = new System.Net.Mail.MailAddress(email);
+                return mail.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
